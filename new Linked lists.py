@@ -7,7 +7,7 @@ def printList(myList, rootPointer):
     loopPointer = rootPointer
 
     while loopPointer != -1: #while not end of linked list
-        print(myList[loopPointer])
+        print(myList[loopPointer].data)
         loopPointer = myList[loopPointer].next
 
 def addnode_at_end(myList, rootPointer, newNode):
@@ -28,27 +28,28 @@ def addnode_at_end(myList, rootPointer, newNode):
 
 def deleteNode(myList, rootPointer, delItem, freePointer):
     searchPointer = rootPointer #create a temp search pointer starts at the root
-
-    while (currentPointer != -1) and (myList[currentPointer].data != delItem): #search for the item
-        currentPointer = searchPointer #keep track of the index of the current node ("searchPointer") before updating it
-        searchPointer = myList[searchPointer].nextNode 
-        #search pointer will either end up as -1 so no item, or will actually end up pointing at the index of the node we're searching for to delete
-    
-    if searchPointer == -1:
-        print("Item not found")
-    else:
-        myList[currentPointer].nextNode = myList[searchPointer].nextNode #let the node before our to-be-deleted node, point to the node linked to our to-be-deleted node
-        myList[searchPointer].data = None #Delete the contents of our desired to-be-deleted node
-
-        #linking the deleted node to the end of the free nodes
-        freeSearch = freePointer #create temp pointer
-        while freeSearch != -1: #loop until end of free nodes is found
-            currentFree = freeSearch #keep track of index of free node we're looking through
-            freeSearch = myList[freeSearch].nextNode
+    if myList[rootPointer].data == 0:
+        while (searchPointer != -1) and (myList[currentPointer].data != delItem): #search for the item
+            currentPointer = searchPointer #keep track of the index of the current node ("searchPointer") before updating it
+            searchPointer = myList[searchPointer].nextNode 
+            #search pointer will either end up as -1 so no item, or will actually end up pointing at the index of the node we're searching for to delete
         
-        myList[currentFree].nextNode = searchPointer #we link our node at the last space of the free list, to point to the deleted node
-        myList[searchPointer].nextNode = -1 #let the deleted node now point to -1, because its the last element of the free list
+        if searchPointer == -1:
+            print("Item not found")
+        else:
+            myList[currentPointer].nextNode = myList[searchPointer].nextNode #let the node before our to-be-deleted node, point to the node linked to our to-be-deleted node
+            myList[searchPointer].data = None #Delete the contents of our desired to-be-deleted node
 
+            #linking the deleted node to the end of the free nodes
+            freeSearch = freePointer #create temp pointer
+            while freeSearch != -1: #loop until end of free nodes is found
+                currentFree = freeSearch #keep track of index of free node we're looking through
+                freeSearch = myList[freeSearch].nextNode
+            
+            myList[currentFree].nextNode = searchPointer #we link our node at the last space of the free list, to point to the deleted node
+            myList[searchPointer].nextNode = -1 #let the deleted node now point to -1, because its the last element of the free list
+    else:
+        print("Already empty")
 
 
 
